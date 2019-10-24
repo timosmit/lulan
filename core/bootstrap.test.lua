@@ -25,6 +25,7 @@ assert(bar == nil)
 --
 
 et = {}
+et.argv = {}
 et.FS_READ = 'r'
 
 et.FindSelf = function() return '' end
@@ -61,4 +62,12 @@ et.trap_FS_FCloseFile = function(fd)
 end
 
 et.G_LogPrint = function()
+end
+
+et.trap_Argc = function()
+	return table.getn(et.argv)
+end
+
+et.trap_Argv = function(i)
+	return et.argv[i + 1]
 end

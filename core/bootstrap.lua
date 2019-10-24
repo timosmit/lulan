@@ -53,9 +53,26 @@ function require(module, required)
 
 end
 
+--- A little helper for arguments handling.
+-- @return table
+local function argv()
+
+	local arguments = {}
+
+	for i = 0, et.trap_Argc() - 1 do
+		table.insert(arguments, et.trap_Argv(i))
+	end
+
+	return arguments
+
+end
+
 --
 -- ET hook functions.
 --
+
+local server  = require('server')
+local console = require('console')
 
 function et_InitGame(levelTime, randomSeed, restart)
 
@@ -64,16 +81,26 @@ function et_InitGame(levelTime, randomSeed, restart)
 	local config = require('file').ini('lulan/lulan.ini')
 
 	if config == nil then
-		-- TODO: Print an error.
+		console.log('lulan: Missing lulan/lulan.ini, no plugins configured.')
 	else
 
 		for plugin in string.gfind(config.lulan.plugins, '([^ ]+)') do
-			et.G_LogPrint('[lulan] Loading plugin ' .. plugin .. '\n')
+			console.print('lulan: Loading plugin ' .. plugin .. '.lua')
 			require('plugin/' .. plugin)
 		end
 
 	end
 
 	require('server').init(levelTime, randomSeed, restart)
+
+end
+
+function et_ConsoleCommand()
+
+	if console.command(unpack(argv())) == false then
+		return 1
+	end
+
+	return 0
 
 end
