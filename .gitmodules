@@ -1,0 +1,3 @@
+[submodule "serialize.lua"]
+	path = serialize.lua
+	url = https://github.com/adawolfa/serialize.lua.git

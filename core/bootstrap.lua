@@ -17,7 +17,7 @@ function require(module, required)
 		local file = module .. '.lua'
 
 		-- ! prefix for external dependencies.
-		if string.sub(file, 1, 2) == '!' then
+		if string.sub(file, 1, 1) == '!' then
 			file = string.sub(file, 2)
 		else
 
