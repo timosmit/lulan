@@ -59,3 +59,6 @@ end
 
 et.trap_FS_FCloseFile = function(fd)
 end
+
+et.G_LogPrint = function()
+end

@@ -21,8 +21,8 @@ function require(module, required)
 			file = string.sub(file, 2)
 		else
 
-			if string.sub(file, 1, 8) == 'plugin/' then
-				file = 'plugins' .. string.sub(file, 8)
+			if string.sub(file, 1, 7) == 'plugin/' then
+				file = 'plugins' .. string.sub(file, 7)
 			else
 				file = 'core/' .. file
 			end
@@ -57,6 +57,22 @@ end
 --
 
 function et_InitGame(levelTime, randomSeed, restart)
+
 	et.RegisterModname('lulan.lua ' .. et.FindSelf())
+
+	local config = require('file').ini('lulan.ini')
+
+	if config == nil then
+		-- TODO: Print an error.
+	else
+
+		for plugin in string.gfind(config.lulan.plugins, '([^ ]+)') do
+			et.G_LogPrint('[lulan] Loading plugin ' .. plugin)
+			require('plugin/' .. plugin)
+		end
+
+	end
+
 	require('server').init(levelTime, randomSeed, restart)
+
 end
