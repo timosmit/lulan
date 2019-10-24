@@ -20,6 +20,8 @@ function this.exec(command, when)
 		when = et.EXEC_APPEND
 	end
 
+	et.trap_SendConsoleCommand(command .. '\n', when)
+
 end
 
 return this

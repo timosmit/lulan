@@ -27,6 +27,9 @@ assert(bar == nil)
 et = {}
 et.argv = {}
 et.FS_READ = 'r'
+et.EXEC_NOW    = 0
+et.EXEC_INSERT = 1
+et.EXEC_APPEND = 2
 
 et.FindSelf = function() return '' end
 et.RegisterModname = function() end
