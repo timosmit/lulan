@@ -35,7 +35,7 @@ et.trap_FS_FOpenFile = function(filename, mode)
 	local fd, _ = io.open('fixtures/' .. filename, mode)
 
 	if fd == nil then
-		return -1
+		return nil, -1
 	end
 
 	local scope = {
@@ -47,7 +47,7 @@ et.trap_FS_FOpenFile = function(filename, mode)
 		scope.buffer = scope.buffer .. line .. '\n'
 	end
 
-	return scope
+	return scope, string.len(scope.buffer)
 
 end
 

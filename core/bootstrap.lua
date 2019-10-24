@@ -28,10 +28,10 @@ function require(module, required)
 				file = 'core/' .. file
 			end
 
-			if not LuLan.TEST then
-				file = et.trap_Cvar_Get("fs_homepath") .. '/etpro/lulan/' .. file
-			end
+		end
 
+		if not LuLan.TEST then
+			file = et.trap_Cvar_Get("fs_homepath") .. '/etpro/lulan/' .. file
 		end
 
 		modules[module] = {}
@@ -61,14 +61,14 @@ function et_InitGame(levelTime, randomSeed, restart)
 
 	et.RegisterModname('lulan.lua ' .. et.FindSelf())
 
-	local config = require('file').ini('lulan.ini')
+	local config = require('file').ini('lulan/lulan.ini')
 
 	if config == nil then
 		-- TODO: Print an error.
 	else
 
 		for plugin in string.gfind(config.lulan.plugins, '([^ ]+)') do
-			et.G_LogPrint('[lulan] Loading plugin ' .. plugin)
+			et.G_LogPrint('[lulan] Loading plugin ' .. plugin .. '\n')
 			require('plugin/' .. plugin)
 		end
 

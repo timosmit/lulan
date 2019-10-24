@@ -27,13 +27,11 @@ function this.lines(filename)
 				local part = string.sub(buffer, 1, s - 1)
 				buffer = string.sub(buffer, e + 1)
 
-				if part ~= "" then
+				if part ~= '' then
 					return part
 				end
 
-			end
-
-			if s == nil then
+			else
 
 				if finish then
 
@@ -48,15 +46,28 @@ function this.lines(filename)
 
 				end
 
-				local next = et.trap_FS_Read(fd, 1024)
+				local read = 1024
 
-				if next == '' then
-					et.trap_FS_FCloseFile(fd)
-					buffer = nil
-					break
+				if read > len then
+					read = len
 				end
 
-				buffer = buffer .. next
+				len = len - read
+
+				if read == 0 then
+
+					et.trap_FS_FCloseFile(fd)
+
+					local remain = buffer
+					buffer = nil
+
+					if remain ~= '' then
+						return remain
+					end
+
+				end
+
+				buffer = buffer .. et.trap_FS_Read(fd, read) -- TODO: Can it return less?
 
 			end
 

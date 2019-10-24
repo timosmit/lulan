@@ -31,3 +31,10 @@ And then run it:
 ~~
 etded.exe +set fs_game etpro +set lua_modules "lulan/core/bootstrap.lua" +map goldrush
 ~~
+
+In case you need to dump a variable, do this:
+
+~~~
+local serialize = require('!serialize.lua/serialize')
+et.G_LogPrint(serialize(var) .. '\n') -- or print() in a test.
+~~~
