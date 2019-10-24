@@ -74,6 +74,8 @@ end
 local server  = require('server')
 local console = require('console')
 
+require('shrubbot')
+
 function et_InitGame(levelTime, randomSeed, restart)
 
 	et.RegisterModname('lulan.lua ' .. et.FindSelf())

@@ -64,6 +64,9 @@ end
 et.G_LogPrint = function()
 end
 
+et.G_Print = function()
+end
+
 et.trap_Argc = function()
 	return table.getn(et.argv)
 end
