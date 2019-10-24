@@ -1,0 +1,2 @@
+-- TEST: Fireteam invites anti-abuse plugin.
+-- Author: adawolfa

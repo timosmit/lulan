@@ -1,0 +1,2 @@
+-- TEST: LuLan bootstrap.
+-- Author: adawolfa
