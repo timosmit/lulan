@@ -15,15 +15,22 @@ function require(module, required)
 	if modules[module] == nil then
 
 		local file = module .. '.lua'
-	
-		if string.sub(file, 1, 8) == 'plugin/' then
-			file = 'plugins' .. string.sub(file, 8)
+
+		-- ! prefix for external dependencies.
+		if string.sub(file, 1, 2) == '!' then
+			file = string.sub(file, 2)
 		else
-			file = 'core/' .. file
-		end
-	
-		if LuLan.BUNDLED then
-			file = 'lulan/' .. file
+
+			if string.sub(file, 1, 8) == 'plugin/' then
+				file = 'plugins' .. string.sub(file, 8)
+			else
+				file = 'core/' .. file
+			end
+
+			if LuLan.BUNDLED then
+				file = 'lulan/' .. file
+			end
+
 		end
 
 		modules[module] = {}
