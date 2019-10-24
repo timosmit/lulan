@@ -65,6 +65,8 @@ function this.lines(filename)
 						return remain
 					end
 
+					break
+
 				end
 
 				buffer = buffer .. et.trap_FS_Read(fd, read) -- TODO: Can it return less?
