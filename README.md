@@ -19,3 +19,15 @@ You can run a single test suite as well:
 ~~~
 powershell -File lulan.ps1 -Action test core/bootstrap.test.lua
 ~~~
+
+When testing on your local server, you can create a junction from this cloned repository into your ETPro folder like this:
+
+~~
+mklink /J "C:\Program Files (x86)\Enemy Territory\etpro\lulan" C:\Users\<user>\..\lulan"
+~~
+
+And then run it:
+
+~~
+etded.exe +set fs_game etpro +set lua_modules "lulan/core/bootstrap.lua" +map goldrush
+~~

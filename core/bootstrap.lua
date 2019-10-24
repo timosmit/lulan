@@ -4,6 +4,7 @@
 LuLan = {}
 LuLan.BUNDLED = false
 LuLan.VERSION = 'unknown'
+LuLan.TEST    = et == nil
 
 local modules = {}
 
@@ -27,8 +28,8 @@ function require(module, required)
 				file = 'core/' .. file
 			end
 
-			if LuLan.BUNDLED then
-				file = 'lulan/' .. file
+			if not LuLan.TEST then
+				file = et.trap_Cvar_Get("fs_homepath") .. '/etpro/lulan/' .. file
 			end
 
 		end
