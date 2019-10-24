@@ -20,6 +20,7 @@ if (!empty($config['password'])) {
 
 	// Prevents from conflicting between multiple installations within the
 	// same domain, also forces re-login whenever the password is changed.
+	// TODO: Nuke this, it's stupid and dangerous idea!
 	$installation = 'lulan_' . substr(sha1(__FILE__ . '#' . ($config['password'] ?? '')), 0, 6);
 
 	if (session_status() === PHP_SESSION_NONE) {
