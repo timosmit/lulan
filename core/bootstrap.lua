@@ -73,6 +73,7 @@ end
 
 local server  = require('server')
 local console = require('console')
+local client  = require('client')
 
 require('shrubbot')
 
@@ -93,7 +94,7 @@ function et_InitGame(levelTime, randomSeed, restart)
 
 	end
 
-	require('server').init(levelTime, randomSeed, restart)
+	require('server').init(levelTime, randomSeed, restart == 1)
 
 end
 
@@ -105,4 +106,24 @@ function et_ConsoleCommand()
 
 	return 0
 
+end
+
+function et_ClientConnect(clientNum, firstTime, isBot)
+	client.connect(clientNum, firstTime == 1)
+end
+
+function et_ClientDisconnect(clientNum)
+	client.disconnect(clientNum)
+end
+
+function et_ClientBegin(clientNum)
+	client.begin(clientNum)
+end
+
+function et_ClientUserinfoChanged(clientNum)
+	client.userinfo(clientNum)
+end
+
+function et_ClientSpawn(clientNum, revived)
+	client.spawn(clientNum, revived == 1)
 end
