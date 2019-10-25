@@ -26,6 +26,8 @@ assert(bar == nil)
 
 et = {}
 et.argv = {}
+et.userinfo = {}
+et.entities = {}
 et.FS_READ = 'r'
 et.EXEC_NOW    = 0
 et.EXEC_INSERT = 1
@@ -76,4 +78,32 @@ end
 
 et.trap_Argv = function(i)
 	return et.argv[i + 1]
+end
+
+et.trap_GetUserinfo = function(num)
+	return et.userinfo[num]
+end
+
+et.Info_ValueForKey = function(s, k)
+	return string.gfind(s, k .. '\\([^\\]+)')()
+end
+
+et.Q_CleanStr = function(s)
+	return string.gsub(s, '%^.', '')
+end
+
+et.gentity_get = function(num, name, index)
+	if index == nil then
+		return et.entities[num][name]
+	else
+		return et.entities[num][name][index + 1]
+	end
+end
+
+et.gentity_set = function(num, name, index, value)
+	if value == nil then
+		et.entities[num][name] = index
+	else
+		et.entities[num][name][index + 1] = value
+	end
 end
