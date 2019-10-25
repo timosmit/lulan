@@ -35,6 +35,7 @@ etded.exe +set fs_game etpro +set lua_modules "lulan/core/bootstrap.lua" +map go
 In case you need to dump a variable, do this:
 
 ~~~
-local serialize = require('!serialize.lua/serialize')
-et.G_LogPrint(serialize(var) .. '\n') -- or print() in a test.
+dump(variable)
 ~~~
+
+This works both in test and server environment! You can pass any number of arguments.

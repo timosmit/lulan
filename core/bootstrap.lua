@@ -53,6 +53,24 @@ function require(module, required)
 
 end
 
+--- Helper for dumping things.
+-- @param... variables to be dumped
+function dump(...)
+
+	for _, var in pairs({unpack(arg)}) do
+
+		local dump = require('!serialize.lua/serialize')(var, false)
+
+		if LuLan.TEST then
+			print(dump)
+		else
+			require('console').log(dump)
+		end
+
+	end
+
+end
+
 --- A little helper for arguments handling.
 -- @return table
 local function argv()
