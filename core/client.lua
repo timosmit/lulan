@@ -8,10 +8,55 @@ this.clients = {}
 
 event.extend(this)
 
---- Finds a client by number or partial name match.
+--- Finds clients by number or partial name match.
 -- @param slot number or a string
--- @return client or nil
+-- @return client table
 function this.find(term)
+
+	term = et.Q_CleanStr(term)
+	local result = {}
+	local n = 0
+
+	for i, client in pairs(this.clients) do
+		if string.find(client.name_clean, term) ~= nil then
+			result[i] = client
+			n = n + 1
+		end
+	end
+
+	table.setn(result, n)
+
+	return result
+
+end
+
+--- Finds exactly one client by number or partial name match.
+-- @param slot number or a string
+-- @param
+function this.find_one(term)
+
+	if type(term) == 'number' or string.len(term) < 3 then
+
+		term = tonumber(term)
+
+		if term == nil or term < 0 or term > 63 or this.clients[term] == nil then
+			return nil, 0
+		end
+
+		return this.clients[term], 1
+
+	end
+
+	local clients = this.find(term)
+
+	if table.getn(clients) ~= 1 then
+		return nil, table.getn(clients)
+	end
+
+	for _, client in pairs(clients) do
+		return client, 1
+	end
+
 end
 
 --- Called on client connect.

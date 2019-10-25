@@ -62,3 +62,48 @@ c.entity_set('ps.powerups', 0, 6)
 
 assert(c.ent['sess.deaths'] == 13)
 assert(c.entity_get('ps.powerups', 0) == 6)
+
+client.clients = {
+	[0] = {
+		num = 0,
+		name_clean = 'lulan',
+	},
+	[1] = {
+		num = 1,
+		name_clean = 'lucy',
+	},
+}
+
+local find, count
+
+find = client.find('lan')
+assert(find[0].num == 0)
+assert(table.getn(find) == 1)
+
+find = client.find('lu')
+assert(find[0].num == 0)
+assert(find[1].num == 1)
+assert(table.getn(find) == 2)
+
+find = client.find('cat')
+assert(table.getn(find) == 0)
+
+find, count = client.find_one(0)
+assert(find.num == 0)
+assert(count == 1)
+
+find, count = client.find_one(-1)
+assert(find == nil)
+assert(count == 0)
+
+find, count = client.find_one('1')
+assert(find.num == 1)
+assert(count == 1)
+
+find, count = client.find_one('l^3ul')
+assert(find.num == 0)
+assert(count == 1)
+
+find, count = client.find_one('^5lu')
+assert(find == nil)
+assert(count == 2)
