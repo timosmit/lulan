@@ -18,7 +18,10 @@ et.entities[0] = {
 	['sess.sessionTeam'] = 1,
 }
 
-et_ClientConnect(0, 1)
+client.once('connect', function() return false end)
+assert(et_ClientConnect(0, 1) == 'You are not allowed to join this server.')
+
+assert(et_ClientConnect(0, 1) == nil)
 
 assert(c)
 assert(client.clients[0] == c)
@@ -62,6 +65,16 @@ c.entity_set('ps.powerups', 0, 6)
 
 assert(c.ent['sess.deaths'] == 13)
 assert(c.entity_get('ps.powerups', 0) == 6)
+
+local disconnect = nil
+
+client.on('disconnect', function(p)
+	disconnect = p.num
+end)
+
+et_ClientDisconnect(0)
+assert(disconnect == 0)
+assert(client.clients[0] == nil)
 
 client.clients = {
 	[0] = {
@@ -107,3 +120,28 @@ assert(count == 1)
 find, count = client.find_one('^5lu')
 assert(find == nil)
 assert(count == 2)
+
+local command = {}
+
+client.on('command', function(client, cmd, a, b)
+
+	command.client = client
+	command.command = cmd
+	command.a = a
+	command.b = b
+
+	if cmd == 'cancel' then
+		return false
+	end
+
+end)
+
+et.argv = {'a', 'b'}
+assert(et_ClientCommand(1, 'command') == 0)
+
+assert(command.client == client.clients[1])
+assert(command.command == 'command')
+assert(command.a == 'a')
+assert(command.b == 'b')
+
+assert(et_ClientCommand(1, 'cancel') == 1)

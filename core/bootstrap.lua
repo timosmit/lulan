@@ -127,7 +127,9 @@ function et_ConsoleCommand()
 end
 
 function et_ClientConnect(clientNum, firstTime, isBot)
-	client.connect(clientNum, firstTime == 1)
+	if client.connect(clientNum, firstTime == 1) == false then
+		return 'You are not allowed to join this server.'
+	end
 end
 
 function et_ClientDisconnect(clientNum)
@@ -144,4 +146,14 @@ end
 
 function et_ClientSpawn(clientNum, revived)
 	client.spawn(clientNum, revived == 1)
+end
+
+function et_ClientCommand(clientNum, command)
+
+	if client.command(clientNum, command, unpack(argv())) == false then
+		return 1
+	end
+
+	return 0
+
 end

@@ -93,7 +93,7 @@ function this.connect(num, firstTime)
 
 	if this.emit('connect', client, firstTime) == false then
 		this.clients[num] = nil
-		return 'You are not allowed to join this server.'
+		return false
 	end
 
 end
@@ -137,6 +137,12 @@ end
 -- @internal this is called by the server
 function this.spawn(num, revived)
 	this.emit('spawn', this.clients[num], revived)
+end
+
+--- Called on client command invocation.
+-- @internal this is called by the server
+function this.command(num, command, ...)
+	return this.emit('command', this.clients[num], command, unpack(arg))
 end
 
 return this
