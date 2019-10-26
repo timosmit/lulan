@@ -112,8 +112,20 @@ function et_InitGame(levelTime, randomSeed, restart)
 
 	end
 
-	require('server').init(levelTime, randomSeed, restart == 1)
+	server.init(levelTime, randomSeed, restart == 1)
 
+end
+
+function et_RunFrame(levelTime)
+	server.frame(levelTime)
+end
+
+function et_ShutdownGame(restart)
+	server.shutdown(restart == 1)
+end
+
+function et_Quit()
+	server.quit()
 end
 
 function et_ConsoleCommand()

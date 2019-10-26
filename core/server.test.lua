@@ -22,3 +22,56 @@ assert(sent.when == et.EXEC_APPEND)
 
 server.exec('map supply', et.EXEC_NOW)
 assert(sent.when == et.EXEC_NOW)
+
+local status
+
+server.on('shutdown', function(restart)
+	status = restart
+end)
+
+et_ShutdownGame(1)
+assert(status == true)
+
+et_ShutdownGame(0)
+assert(status == false)
+
+server.on('quit', function()
+	status = 'quit'
+end)
+
+et_Quit()
+
+assert(status == 'quit')
+
+local times = 0
+
+server.timeout(function()
+	times = times + 1
+end)
+
+et_RunFrame(0)
+et_RunFrame(50)
+
+assert(times == 1)
+
+local timer = server.interval(function()
+	times = times + 1
+end)
+
+et_RunFrame(100)
+et_RunFrame(150)
+
+server.cancel(timer)
+et_RunFrame(200)
+
+assert(times == 3)
+
+server.timeout(function() times = times + 1 end)
+server.timeout(function() times = times + 1 end)
+server.timeout(function() times = times + 1 end)
+
+et_RunFrame(250)
+
+assert(times == 6)
+
+et_RunFrame(300)
