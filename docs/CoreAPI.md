@@ -36,7 +36,7 @@ Most of the core modules emit various events you can listen for. Such modules ex
 
 If the supplied callback returns `false`, the event is intercepted and causes the event loop to stop. This means that if there are two listeners and the first one registered returns a `false`, the second one doesn't get called.
 
-The difference between `on` and `once` is that `on` will be called every time an event is emitted, while the `once` causes the callback to be invoked exactly once (first the the event occurs).
+The difference between `on` and `once` is that `on` will be called every time an event is emitted, while the `once` causes the callback to be invoked exactly once (first time the event occurs).
 
 ~~~lua
 console.on('command', function(command, param1, param2, ...)
@@ -69,6 +69,10 @@ end)
 - `command`: a command to be executed **without** trailing line break
 - `when`: one of `et.EXEC_APPEND`, `et.EXEC_INSERT` or `et.EXEC_NOW` constants
 
+~~~lua
+server.exec('qsay "Hello world!"')
+~~~
+
 `[table] timeout([function] callback, [number] timeout = 0)`: Executes supplied callback after specified number of milliseconds.
 - `callback`: the function to be executed once the timer elapses
 - `timeout`: time span in milliseconds
@@ -81,3 +85,27 @@ end)
 
 `cancel([table] timer)`: Cancels a pending timer returned by `timeout` or `interval`, that is, the timer won't execute and is completely removed from timers table.
 - `timer`: timer to be cancelled
+
+Example:
+
+~~~lua
+local server = require('server')
+
+server.timeout(function()
+    -- executes in the next frame.
+end)
+
+server.timeout(function()
+    -- executes after 1 second
+end, 1000)
+
+local bad = server.interval(function()
+    -- executes every frame (usually, this isn't a good idea!)
+end)
+
+server.interval(function()
+    -- executes every second
+end, 1000)
+
+server.cancel(bad) -- won't execute again.
+~~~
