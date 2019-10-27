@@ -9,13 +9,13 @@ require('event').extend(this)
 
 --- Called on game initialization.
 -- @internal this is called by the server
-function this.init(levelTime, randomSeed, restart)
+function this.h_init(levelTime, randomSeed, restart)
 	this.emit('init', levelTime, randomSeed, restart)
 end
 
 --- Called on each frame.
 -- @internal this is called by the server
-function this.frame(levelTime)
+function this.h_frame(levelTime)
 
 	this.level_time = levelTime
 
@@ -58,13 +58,13 @@ end
 
 --- Called on game shutdown.
 -- @internal this is called by the server
-function this.shutdown(restart)
+function this.h_shutdown(restart)
 	this.emit('shutdown', restart)
 end
 
 --- Called on mod unload.
 -- @internal this is called by the server
-function this.quit()
+function this.h_quit()
 	this.emit('quit')
 end
 

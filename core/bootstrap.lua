@@ -117,25 +117,25 @@ function et_InitGame(levelTime, randomSeed, restart)
 
 	end
 
-	server.init(levelTime, randomSeed, restart == 1)
+	server.h_init(levelTime, randomSeed, restart == 1)
 
 end
 
 function et_RunFrame(levelTime)
-	server.frame(levelTime)
+	server.h_frame(levelTime)
 end
 
 function et_ShutdownGame(restart)
-	server.shutdown(restart == 1)
+	server.h_shutdown(restart == 1)
 end
 
 function et_Quit()
-	server.quit()
+	server.h_quit()
 end
 
 function et_ConsoleCommand()
 
-	if console.command(unpack(argv())) == false then
+	if console.h_command(unpack(argv())) == false then
 		return 1
 	end
 

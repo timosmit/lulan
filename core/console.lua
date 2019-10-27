@@ -19,7 +19,7 @@ end
 
 --- Called on server console command.
 -- @internal this is called by the server
-function this.command(...)
+function this.h_command(...)
 	return this.emit('command', unpack(arg))
 end
 
