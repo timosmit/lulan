@@ -93,11 +93,17 @@ et.Q_CleanStr = function(s)
 end
 
 et.gentity_get = function(num, name, index)
+
+	if et.entities[num] == nil then
+		return nil
+	end
+
 	if index == nil then
 		return et.entities[num][name]
 	else
 		return et.entities[num][name][index + 1]
 	end
+
 end
 
 et.gentity_set = function(num, name, index, value)
