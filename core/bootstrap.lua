@@ -2,8 +2,7 @@
 -- Author: adawolfa
 
 LuLan = {}
-LuLan.BUNDLED = false
-LuLan.VERSION = 'unknown'
+LuLan.VERSION = '0.0.0'
 LuLan.TEST    = et == nil
 
 local modules = {}
