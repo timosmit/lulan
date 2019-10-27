@@ -4,7 +4,7 @@ This is an extensible Lua module for ETPro servers. It unifies various small mod
 
 ## Documentation
 
-- [Core API](docs/Core%20Api.md)
+- [Core API](docs/CoreAPI.md)
 
 ## Contributing
 
