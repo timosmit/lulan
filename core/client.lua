@@ -10,8 +10,31 @@ event.extend(this)
 
 --- Finds clients by number or partial name match.
 -- @param slot number or a string
+-- @param true to allow slot number as well
 -- @return client table
-function this.find(term)
+function this.find(term, allowNum)
+
+	if type(term) == 'string' and string.len(term) == 0 then
+		return {}
+	end
+
+	if allowNum == true and (type(term) == 'number' or string.len(term) < 3) then
+
+		local num = tonumber(term)
+
+		if num ~= nil and num >= 0 and num <= 63 then
+
+			if this.clients[num] ~= nil then
+				local result = {[num] = this.clients[num]}
+				table.setn(result, 1)
+				return result
+			end
+
+			return {}
+
+		end
+
+	end
 
 	term = et.Q_CleanStr(term)
 	local result = {}

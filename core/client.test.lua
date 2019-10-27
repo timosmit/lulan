@@ -110,6 +110,13 @@ find = client.find('lan')
 assert(find[0].num == 0)
 assert(table.getn(find) == 1)
 
+find = client.find('0', true)
+assert(find[0].num == 0)
+assert(table.getn(find) == 1)
+
+find = client.find(0)
+assert(table.getn(find) == 0)
+
 find = client.find('lu')
 assert(find[0].num == 0)
 assert(find[1].num == 1)
