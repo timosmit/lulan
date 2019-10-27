@@ -2,76 +2,76 @@
 -- Author: adawolfa
 
 local this = {}
-local client = require('client')
+local client  = require('client')
+local server  = require('server')
 
-client.on('command', function(p, command, action, argument)
+local PERS_INVITATION  = 'pers.invitationClient'
+local PERS_APPLICATION = 'pers.applicationClient'
+local CMD_INVITATION   = 'invitation'
+local CMD_APPLICATION  = 'application'
 
-	if command == 'vote' and (action == 'yes' or action == 'no') then
-		this.response(p, action == 'yes')
-		return
-	end
+this.interactions = {}
 
-	if command ~= 'fireteam' then
-		return
-	end
+client.on('command', function(who, command, action, argument)
 
-	if argument ~= nil then
-
-		if action == 'invite' then
-
-			-- no eligible matching names found
-			-- fireteam invite found %d players matching %s
-
-			local whoms = client.find(argument)
-
-			for _, whom in pairs(whoms) do
-				this.invite(p, whom)
-			end
-
-		else if action == 'invitenum'
-
-			-- Invalid client selected
-
-			local whom, count = client.find_one(argument)
-
-			if whom ~= nil then
-				this.invite(p, whom)
-			end
-
+	if command == 'fireteam' then
+		if action == 'invite' or action == 'invitenum' or action == 'inviteall' then
+			server.timeout(function()
+				this.invites(who)
+			end)
+		elseif action == 'apply' then
+			server.timeout(function()
+				this.applies(who)
+			end)
 		end
-
-		return
-
-	end
-
-	if action == 'inviteall'
-
-		for _, whom in pairs(client.clients) do
-			this.invite(p, whom)
-		end
-
 	end
 
 end)
 
---- Called when a player invites someone to his fireteam.
--- @param who is inviting?
--- @param who is being invited?
-function this.invite(who, whom)
-
-	if who.team ~= whom.team then
-		return
+--- Called when someone is inviting to a fireteam.
+function this.invites(who)
+	for _, whom in client.clients do
+		if whom.ent[PERS_INVITATION] == who.num then
+			this.interact(who, whom, CMD_INVITATION, PERS_INVITATION)
+		end
 	end
+end
 
-	-- we need to check if whom has ps.fireteam set?
-	-- we need to check pers.invitationClient loop
+--- Called when someone is applying to a fireteam.
+function this.applies(who)
+	for _, whom in client.clients do
+		if whom.ent[PERS_APPLICATION] == who.num then
+			this.interact(who, whom, CMD_APPLICATION, PERS_APPLICATION)
+		end
+	end
+end
+
+--- Called on fireteam interaction.
+function this.interact(who, whom, command, pers)
+
+	this.advance(who, whom)
+
+	if this.is_excessive(who, whom) then
+		et.trap_SendServerCommand(whom.num, command .. ' -5')
+		whom.ent[pers] = -1
+	end
 
 end
 
---- Called when a player "votes".
--- @param who is being invited
--- @param response true/false
-function this.respond(whom, response)
+--- Advances fireteam interaction counter.
+function this.advance(who, whom)
+
+	if this.interactions[who.num] == nil then
+		this.interactions[who.num] = {}
+	end
+
+	this.interactions[who.num][whom.num] = (this.interactions[who.num][whom.num] or 0) + 1
+
+end
+
+--- Determines whether the invitation is beyond the limit.
+function this.is_excessive(who, whom)
+	return this.interactions[who.num][whom.num] > 2
 end
 
 return this

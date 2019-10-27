@@ -136,7 +136,7 @@ client.on('command', function(client, cmd, a, b)
 
 end)
 
-et.argv = {'a', 'b'}
+et.argv = {'command', 'a', 'b'}
 assert(et_ClientCommand(1, 'command') == 0)
 
 assert(command.client == client.clients[1])

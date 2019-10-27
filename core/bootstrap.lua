@@ -72,12 +72,17 @@ function dump(...)
 end
 
 --- A little helper for arguments handling.
+-- @param offset (default = 0)
 -- @return table
-local function argv()
+local function argv(offset)
 
 	local arguments = {}
 
-	for i = 0, et.trap_Argc() - 1 do
+	if offset == nil then
+		offset = 0
+	end
+
+	for i = offset, et.trap_Argc() - 1 do
 		table.insert(arguments, et.trap_Argv(i))
 	end
 
@@ -162,7 +167,7 @@ end
 
 function et_ClientCommand(clientNum, command)
 
-	if client.command(clientNum, command, unpack(argv())) == false then
+	if client.command(clientNum, command, unpack(argv(1))) == false then
 		return 1
 	end
 
