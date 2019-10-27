@@ -53,6 +53,8 @@ end)
 
 ## Server
 
+Contains server lifecycle related functionality.
+
 ### Events
 
 `init`: Called on game startup (`et_InitGame`)
@@ -110,4 +112,39 @@ server.interval(function()
 end, 1000)
 
 server.cancel(bad) -- won't execute again.
+~~~
+
+## Event
+
+Provides event interface.
+
+### Methods
+
+`extend([table] scope)`: Adds `on`, `once` and `emit` functions to the given module scope.
+- `scope`: the scope to be extended
+
+Any module emitting events usually look like this:
+
+~~~lua
+-- plugin/my-module.lua
+local this = {}
+
+require('event').extend(this)
+
+-- later on, you can emit an event:
+if this.emit('my-event', param1, param2) == false then
+    -- event was intercepted (a handler returned false)
+end
+
+return this
+~~~
+
+Consumers then can listen for `my-event`:
+
+~~~lua
+local module = require('plugin/my-module')
+
+module.on('event', function(param1, param2)
+    -- do something.
+end)
 ~~~
