@@ -2,6 +2,10 @@
 
 This is an extensible Lua module for ETPro servers. It unifies various small modules, introduces shared interface for reading shrubbot files and accessing player data, simplifies persistent data storage and introduces event system.
 
+## Documentation
+
+- [Core API](docs/Core%20Api.md)
+
 ## Contributing
 
 No module (core or plugin) should declare global variable or function, always use `local` or encapsulate your plugin in a self-calling function. Keep already used formatting and use the right (that's tab!) indent character.
