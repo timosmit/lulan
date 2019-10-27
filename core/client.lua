@@ -121,7 +121,7 @@ function this.h_connect(num, firstTime)
 	-- TODO: Consider this?
 	-- event.extend(client)
 
-	this.clients[num] = client
+	table.insert(this.clients, num, client)
 	this.h_userinfo(num)
 
 	if this.emit('connect', client, firstTime) == false then
@@ -135,7 +135,7 @@ end
 -- @internal this is called by the server
 function this.h_disconnect(num)
 	this.emit('disconnect', this.clients[num])
-	this.clients[num] = nil
+	table.remove(this.clients, num)
 end
 
 --- Called on client begin.
