@@ -8,6 +8,20 @@ this.clients = {}
 
 event.extend(this)
 
+-- Message positions.
+this.CHAT  = 'chat'  -- chat area + console (without server prefix)
+this.CPM   = 'cpm'   -- popup + console
+this.PRINT = 'print' -- console
+this.CP    = 'cp'    -- center print
+this.SC    = 'sc'    -- console + stats dump
+
+-- Banner positions (they all display in console according to client setting).
+this.B_CHAT    =   8 -- chat area
+this.B_POPUP   =  16 -- popup
+this.B_CP      =  32 -- center print
+this.B_CONSOLE =  64 -- invisible (console banner only)
+this.B_TOP     = 128 -- top of screen
+
 --- Finds clients by number or partial name match.
 -- @param slot number or a string
 -- @param true to allow slot number as well
@@ -88,6 +102,20 @@ function this.command(command)
 	et.trap_SendServerCommand(-1, command)
 end
 
+--- Prints a message in everyone's game.
+-- @param one of CHAT, CPM, PRINT, CP constants
+-- @param the message
+function this.print(where, message)
+	this.command(where .. ' ' .. '"' .. message .. '"')
+end
+
+--- Prints a banner in everyone's game.
+-- @param a sum of B_* constants
+-- @param the message
+function this.banner(position, message)
+	this.command('b ' .. position .. ' ' .. '"' .. message .. '"')
+end
+
 --- Called on client connect.
 -- @internal this is called by the server
 function this.h_connect(num, firstTime)
@@ -116,6 +144,14 @@ function this.h_connect(num, firstTime)
 
 	function client.command(command)
 		et.trap_SendServerCommand(client.num, command)
+	end
+
+	function client.print(where, message)
+		client.command(where .. ' ' .. '"' .. message .. '"')
+	end
+
+	function client.banner(position, message)
+		client.command('b ' .. position .. ' ' .. '"' .. message .. '"')
 	end
 
 	-- TODO: Consider this?

@@ -83,6 +83,22 @@ client.command('cpm "bar"')
 assert(command.num == -1)
 assert(command.command == 'cpm "bar"')
 
+client.print(client.CPM, 'center print message')
+assert(command.num == -1)
+assert(command.command == 'cpm "center print message"')
+
+client.banner(client.B_TOP + client.B_CP, 'banner message')
+assert(command.num == -1)
+assert(command.command == 'b 160 "banner message"')
+
+c.print(client.CPM, 'center print message')
+assert(command.num == 0)
+assert(command.command == 'cpm "center print message"')
+
+c.banner(client.B_TOP, 'banner message')
+assert(command.num == 0)
+assert(command.command == 'b 128 "banner message"')
+
 local disconnect = nil
 
 client.on('disconnect', function(p)
