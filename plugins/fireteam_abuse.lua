@@ -28,6 +28,20 @@ client.on('command', function(who, command, action, argument)
 
 end)
 
+client.on('disconnect', function(who)
+
+	if this.interactions[who.num] ~= nil then
+		this.interactions[who.num] = nil
+	end
+
+	for _, interaction in this.interactions do
+		if interaction[who.num] ~= nil then
+			interaction[who.num] = nil
+		end
+	end
+
+end)
+
 --- Called when someone is inviting to a fireteam.
 function this.invites(who)
 	for _, whom in client.clients do

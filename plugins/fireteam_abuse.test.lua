@@ -56,3 +56,7 @@ et_RunFrame(200)
 assert(cmd.num == 0)
 assert(cmd.command == 'application -5')
 assert(et.entities[0]['pers.applicationClient'] == -1)
+
+et_ClientDisconnect(0)
+assert(plugin.interactions[0] == nil)
+assert(plugin.interactions[1][0] == nil)
