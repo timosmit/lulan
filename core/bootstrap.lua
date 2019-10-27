@@ -98,6 +98,7 @@ local console = require('console')
 local client  = require('client')
 
 require('shrubbot')
+require('chat')
 
 function et_InitGame(levelTime, randomSeed, restart)
 
@@ -166,7 +167,22 @@ end
 
 function et_ClientCommand(clientNum, command)
 
-	if client.h_command(clientNum, command, unpack(argv(1))) == false then
+	local arguments = argv(1)
+
+	-- Message in console breaks into individual arguments.
+	if command == 'say' and table.getn(arguments) > 1 then
+
+		local concat = ''
+
+		for _, a in arguments do
+			concat = concat .. ' ' .. a;
+		end
+
+		arguments = {string.sub(concat, 2)}
+
+	end
+
+	if client.h_command(clientNum, command, unpack(arguments)) == false then
 		return 1
 	end
 
