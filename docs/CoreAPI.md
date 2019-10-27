@@ -62,6 +62,8 @@ Contains server lifecycle related functionality.
 - `[number] randomSeed`
 - `[bool]   restart`
 
+> **NOTE**: It doesn't make much sense to listening for this event in a plugin that doesn't care about the parameters. **In fact, plugins are loaded in `et_InitGame`**. In other words, any code outside a function is executed during game initialization. You **can** use it, but most of the time, you don't have to.
+
 `shutdown`: Called on game shutdown (`et_ShutdownGame`)
 - `[bool] restart`
 
