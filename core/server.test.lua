@@ -75,3 +75,16 @@ et_RunFrame(250)
 assert(times == 6)
 
 et_RunFrame(300)
+
+server.timeout(function() undefined() end) -- keep this number at line 92
+
+local message
+
+function et.G_LogPrint(m)
+	message = m
+end
+
+et_RunFrame(350)
+
+assert(table.getn(server.timers) == 0)
+assert(message == 'lulan: Error occurred in timer: lulan/core\\server.test.lua:79: attempt to call global `undefined\' (a nil value)\n')

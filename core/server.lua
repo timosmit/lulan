@@ -34,12 +34,16 @@ function this.h_frame(levelTime)
 
 		if timer.timeout <= this.level_time then
 
-			timer.callback()
+			local result, error = pcall(timer.callback)
 
 			if timer.interval ~= nil then
 				timer.timeout = this.level_time + timer.interval
 			else
 				this.timers[i] = nil
+			end
+
+			if result == false then
+				require('console').log('lulan: Error occurred in timer: lulan/' .. error)
 			end
 
 		end
