@@ -52,7 +52,7 @@ function this.interact(who, whom, command, pers)
 	this.advance(who, whom)
 
 	if this.is_excessive(who, whom) then
-		et.trap_SendServerCommand(whom.num, command .. ' -5')
+		whom.command(command .. ' -5')
 		whom.ent[pers] = -1
 	end
 
