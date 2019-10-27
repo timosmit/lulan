@@ -38,6 +38,8 @@ If the supplied callback returns `false`, the event is intercepted and causes th
 
 The difference between `on` and `once` is that `on` will be called every time an event is emitted, while the `once` causes the callback to be invoked exactly once (first time the event occurs).
 
+> **NOTE**: `once` is executed before `on` listeners, so if you return `false` there, `on` handlers won't be executed at all.
+
 ~~~lua
 console.on('command', function(command, param1, param2, ...)
     
