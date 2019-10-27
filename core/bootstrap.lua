@@ -144,30 +144,30 @@ function et_ConsoleCommand()
 end
 
 function et_ClientConnect(clientNum, firstTime, isBot)
-	if client.connect(clientNum, firstTime == 1) == false then
+	if client.h_connect(clientNum, firstTime == 1) == false then
 		return 'You are not allowed to join this server.'
 	end
 end
 
 function et_ClientDisconnect(clientNum)
-	client.disconnect(clientNum)
+	client.h_disconnect(clientNum)
 end
 
 function et_ClientBegin(clientNum)
-	client.begin(clientNum)
+	client.h_begin(clientNum)
 end
 
 function et_ClientUserinfoChanged(clientNum)
-	client.userinfo(clientNum)
+	client.h_userinfo(clientNum)
 end
 
 function et_ClientSpawn(clientNum, revived)
-	client.spawn(clientNum, revived == 1)
+	client.h_spawn(clientNum, revived == 1)
 end
 
 function et_ClientCommand(clientNum, command)
 
-	if client.command(clientNum, command, unpack(argv(1))) == false then
+	if client.h_command(clientNum, command, unpack(argv(1))) == false then
 		return 1
 	end
 

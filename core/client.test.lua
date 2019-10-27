@@ -66,6 +66,23 @@ c.entity_set('ps.powerups', 0, 6)
 assert(c.ent['sess.deaths'] == 13)
 assert(c.entity_get('ps.powerups', 0) == 6)
 
+local command = {}
+
+function et.trap_SendServerCommand(num, cmd)
+	command.num = num
+	command.command = cmd
+end
+
+c.command('cpm "foo"')
+
+assert(command.num == 0)
+assert(command.command == 'cpm "foo"')
+
+client.command('cpm "bar"')
+
+assert(command.num == -1)
+assert(command.command == 'cpm "bar"')
+
 local disconnect = nil
 
 client.on('disconnect', function(p)
@@ -121,7 +138,7 @@ find, count = client.find_one('^5lu')
 assert(find == nil)
 assert(count == 2)
 
-local command = {}
+command = {}
 
 client.on('command', function(client, cmd, a, b)
 

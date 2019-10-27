@@ -59,9 +59,15 @@ function this.find_one(term)
 
 end
 
+--- Sends a client command to everyone.
+-- @param command string
+function this.command(command)
+	et.trap_SendServerCommand(-1, command)
+end
+
 --- Called on client connect.
 -- @internal this is called by the server
-function this.connect(num, firstTime)
+function this.h_connect(num, firstTime)
 
 	local client = {
 		num = num,
@@ -85,11 +91,15 @@ function this.connect(num, firstTime)
 		et.gentity_set(client.num, key, index, value)
 	end
 
+	function client.command(command)
+		et.trap_SendServerCommand(client.num, command)
+	end
+
 	-- TODO: Consider this?
 	-- event.extend(client)
 
 	this.clients[num] = client
-	this.userinfo(num)
+	this.h_userinfo(num)
 
 	if this.emit('connect', client, firstTime) == false then
 		this.clients[num] = nil
@@ -100,22 +110,22 @@ end
 
 --- Called on client disconnect.
 -- @internal this is called by the server
-function this.disconnect(num)
+function this.h_disconnect(num)
 	this.emit('disconnect', this.clients[num])
 	this.clients[num] = nil
 end
 
 --- Called on client begin.
 -- @internal this is called by the server
-function this.begin(num)
-	this.userinfo(num, true)
+function this.h_begin(num)
+	this.h_userinfo(num, true)
 	this.emit('begin', this.clients[num])
 end
 
 --- Called on userinfo change.
 -- @param partial - called only on begin
 -- @internal this is called by the server
-function this.userinfo(num, partial)
+function this.h_userinfo(num, partial)
 
 	local client = this.clients[num]
 
@@ -135,13 +145,13 @@ end
 
 --- Called on client spawn.
 -- @internal this is called by the server
-function this.spawn(num, revived)
+function this.h_spawn(num, revived)
 	this.emit('spawn', this.clients[num], revived)
 end
 
 --- Called on client command invocation.
 -- @internal this is called by the server
-function this.command(num, command, ...)
+function this.h_command(num, command, ...)
 	return this.emit('command', this.clients[num], command, unpack(arg))
 end
 
