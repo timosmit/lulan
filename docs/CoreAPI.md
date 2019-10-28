@@ -1,6 +1,6 @@
 # Core API
 
-LuLan is composed from modules, each of them containing related functionality. Core consists of several modules and also each plugin is a module by itself.
+LuLan is composed of modules, each of them containing related functionality. Core consists of several modules and also each plugin is a module by itself.
 
 ### Accessing modules
 
