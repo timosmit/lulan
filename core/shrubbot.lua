@@ -57,6 +57,8 @@ end
 function this.load_level(c)
 	if this.admins[c.guid] ~= nil then
 		c.level = this.admins[c.guid].level
+	else
+		c.level = 0
 	end
 end
 
