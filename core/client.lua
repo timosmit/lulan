@@ -50,12 +50,12 @@ function this.find(term, allowNum)
 
 	end
 
-	term = et.Q_CleanStr(term)
+	term = string.escape_pattern(string.lower(et.Q_CleanStr(term)))
 	local result = {}
 	local n = 0
 
 	for i, client in pairs(this.clients) do
-		if string.find(client.name_clean, term) ~= nil then
+		if string.find(string.lower(client.name_clean), term) ~= nil then
 			result[i] = client
 			n = n + 1
 		end

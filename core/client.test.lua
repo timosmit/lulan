@@ -122,9 +122,12 @@ client.clients = {
 
 local find, count
 
-find = client.find('lan')
+find = client.find('LAN')
 assert(find[0].num == 0)
 assert(table.getn(find) == 1)
+
+find = client.find('[lul]+')
+assert(table.getn(find) == 0)
 
 find = client.find('0', true)
 assert(find[0].num == 0)

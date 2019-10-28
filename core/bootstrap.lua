@@ -52,6 +52,10 @@ function require(module, required)
 
 end
 
+--
+-- Various helpers.
+--
+
 --- Helper for dumping things.
 -- @param... variables to be dumped
 function dump(...)
@@ -68,6 +72,17 @@ function dump(...)
 
 	end
 
+end
+
+--- Escapes pattern for string.gsub() or string.find().
+-- @param the pattern to be escaped
+-- @return escaped pattern
+function string.escape_pattern(pattern)
+	pattern = string.gsub(pattern, '%%', '%%%%')
+	pattern = string.gsub(pattern, '([-+=<>?*%[%]()_])', '%%%1')
+	pattern = string.gsub(pattern, '^%^', '%%^')
+	pattern = string.gsub(pattern, '%$$', '%%$')
+	return pattern
 end
 
 --- A little helper for arguments handling.

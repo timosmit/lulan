@@ -51,6 +51,16 @@ console.on('command', function(command, param1, param2, ...)
 end)
 ~~~
 
+## Bootstrap
+
+Bootstrap isn't really a module, it's rather the mod entry point. Apart from initialization, it defines some handy functions:
+
+`dump(...variable)`: Dumps passed variable(s), works both in test and ET server environment.
+- `variable`: any number of variables can be passed and they can be of any type
+
+`string.escape_pattern([string] pattern)`: Escapes pattern for `string.find()` and `string.gsub()`.
+- `pattern`: pattern to be escaped
+
 ## Server
 
 Contains server lifecycle related functionality.

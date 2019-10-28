@@ -20,6 +20,9 @@ assert(foo == nil)
 local bar = require('bar', false)
 assert(bar == nil)
 
+-- string.escape_pattern()
+assert(string.escape_pattern('^[a*c%]$') == '%^%[a%*c%%%]%$')
+
 --
 -- ET polyfills.
 --
