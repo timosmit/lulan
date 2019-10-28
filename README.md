@@ -5,6 +5,7 @@ This is an extensible Lua module for ETPro servers. It unifies various small mod
 ## Documentation
 
 - [Core API](docs/CoreAPI.md)
+- [Writing a plugin](docs/WritingPlugin.md)
 
 ## Contributing
 
