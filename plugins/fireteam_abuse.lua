@@ -5,6 +5,22 @@ local this = {}
 local client  = require('client')
 local server  = require('server')
 
+local config
+
+if arg ~= nil then
+	config = unpack(arg)
+end
+
+if config ~= nil and config.limit ~= nil then
+	this.limit = tonumber(config.limit)
+end
+
+if this.limit == nil then
+	this.limit = 2
+elseif this.limit < 0 then
+	this.limit = 0
+end
+
 local PERS_INVITATION  = 'pers.invitationClient'
 local PERS_APPLICATION = 'pers.applicationClient'
 local CMD_INVITATION   = 'invitation'
@@ -85,7 +101,7 @@ end
 
 --- Determines whether the invitation is beyond the limit.
 function this.is_excessive(who, whom)
-	return this.interactions[who.num][whom.num] > 2
+	return this.interactions[who.num][whom.num] > this.limit
 end
 
 return this

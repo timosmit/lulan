@@ -4,6 +4,7 @@
 LuLan = {}
 LuLan.VERSION = '0.0.0'
 LuLan.TEST    = et == nil
+LuLan.config  = nil
 
 local modules = {}
 
@@ -15,6 +16,7 @@ function require(module, required)
 	if modules[module] == nil then
 
 		local file = module .. '.lua'
+		local arguments = {}
 
 		-- ! prefix for external dependencies.
 		if string.sub(file, 1, 1) == '!' then
@@ -22,7 +24,11 @@ function require(module, required)
 		else
 
 			if string.sub(file, 1, 7) == 'plugin/' then
-				file = 'plugins' .. string.sub(file, 7)
+				local plugin = string.sub(file, 8)
+				file = 'plugins/' .. plugin
+				if LuLan.config ~= nil and LuLan.config[plugin] ~= nil then
+					arguments = {LuLan.config[plugin]}
+				end
 			else
 				file = 'core/' .. file
 			end
@@ -39,11 +45,20 @@ function require(module, required)
 
 			-- This won't report an error if the file is missing or contains an error.
 			pcall(function()
-				modules[module].scope = dofile(file)
+				local factory = loadfile(file)
+				modules[module].scope = factory(unpack(arguments))
 			end)
 
 		else
-			modules[module].scope = dofile(file)
+
+			local factory, err = loadfile(file)
+
+			if factory ~= nil then
+				modules[module].scope = factory(unpack(arguments))
+			elseif error ~= nil then
+				error(err)
+			end
+
 		end
 
 	end
@@ -119,13 +134,13 @@ function et_InitGame(levelTime, randomSeed, restart)
 
 	et.RegisterModname('lulan.lua ' .. et.FindSelf())
 
-	local config = require('file').ini('lulan/lulan.ini')
+	LuLan.config = require('file').ini('lulan/lulan.ini')
 
-	if config == nil then
+	if LuLan.config == nil then
 		console.log('lulan: Missing lulan/lulan.ini, no plugins configured.')
 	else
 
-		for plugin in string.gfind(config.lulan.plugins, '([^ ]+)') do
+		for plugin in string.gfind(LuLan.config.lulan.plugins, '([^ ]+)') do
 			console.print('lulan: Loading plugin ' .. plugin .. '.lua')
 			require('plugin/' .. plugin)
 		end
