@@ -23,7 +23,7 @@ There are several types of modules we distinct:
 - plugins: `plugin/fireteam_abuse` (note the prefix),
 - external modules: `!serialize.lua/serialize` (note the exclamation mark indicating this is a non-LuLan module).
 
-Calling `require()` is basically the same as calling `dofile`, except the file is only loaded on first call. On subsequent calls, an existing scope will be returned. If a module doesn't return anything, the result of `require()` is simply `nil`.
+Calling `require()` is basically the same as calling `dofile`, except the file is only loaded on first call. On subsequent calls, an existing scope will be returned. If a module doesn't return anything **or it does not exist** (shouldn't be the case of a core module!), the result of `require()` is simply `nil`.
 
 > **NOTE**: `bootstrap` isn't a module, don't `require()` it unless you want to break things. It's the mod entry point loading the core, plugins and forwarding hook functions calls.
 
