@@ -19,7 +19,7 @@ console.on('command', function(command, a, b)
 
 end)
 
-et.argv = {'command', 1, 2}
+et.argv = {'Command', 1, 2}
 assert(et_ConsoleCommand() == 0)
 assert(arguments.command == 'command')
 assert(arguments.a == 1)

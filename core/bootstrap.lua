@@ -135,7 +135,9 @@ end
 
 function et_ConsoleCommand()
 
-	if console.h_command(unpack(argv())) == false then
+	local command = string.lower(et.trap_Argv(0))
+
+	if console.h_command(command, unpack(argv(1))) == false then
 		return 1
 	end
 
@@ -182,7 +184,7 @@ function et_ClientCommand(clientNum, command)
 
 	end
 
-	if client.h_command(clientNum, command, unpack(arguments)) == false then
+	if client.h_command(clientNum, string.lower(command), unpack(arguments)) == false then
 		return 1
 	end
 
