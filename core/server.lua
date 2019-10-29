@@ -4,6 +4,7 @@
 local this = {}
 this.timers = {}
 this.level_time = 0
+this.cvars = {}
 
 require('event').extend(this)
 
@@ -138,5 +139,15 @@ function this.cancel(timer)
 	end
 
 end
+
+-- cvar magic accessor.
+setmetatable(this.cvars, {
+	__index = function(_, k)
+		return et.trap_Cvar_Get(k)
+	end,
+	__newindex = function(_, k, v)
+		return et.trap_Cvar_Set(k, v)
+	end,
+})
 
 return this

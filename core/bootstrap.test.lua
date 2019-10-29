@@ -28,6 +28,7 @@ assert(string.escape_pattern('^[a*c%]$') == '%^%[a%*c%%%]%$')
 --
 
 et = {}
+et.cvars = {}
 et.argv = {}
 et.userinfo = {}
 et.entities = {}
@@ -115,4 +116,12 @@ et.gentity_set = function(num, name, index, value)
 	else
 		et.entities[num][name][index + 1] = value
 	end
+end
+
+et.trap_Cvar_Get = function(cvar)
+	return et.cvars[cvar]
+end
+
+et.trap_Cvar_Set = function(cvar, value)
+	et.cvars[cvar] = value
 end

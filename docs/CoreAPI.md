@@ -79,6 +79,15 @@ Contains server lifecycle related functionality.
 
 `quit`: Called on mod unload (`et_Quit`)
 
+### Fields
+
+- `[table] cvars`: Cvars magic accessor
+
+~~~lua
+dump(server.cvars.sv_hostname) -- read
+server.cvars.g_gravity = 100   -- write
+~~~
+
 ### Methods
 
 `exec([string] command, [number] when = et.EXEC_APPEND)`: Executes a command in server's console.
