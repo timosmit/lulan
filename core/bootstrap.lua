@@ -46,7 +46,7 @@ function require(module, required)
 			-- This won't report an error if the file is missing or contains an error.
 			pcall(function()
 				local factory = loadfile(file)
-				modules[module].scope = factory(unpack(arguments))
+				modules[module].scope = factory(arguments)
 			end)
 
 		else
@@ -54,7 +54,7 @@ function require(module, required)
 			local factory, err = loadfile(file)
 
 			if factory ~= nil then
-				modules[module].scope = factory(unpack(arguments))
+				modules[module].scope = factory(arguments)
 			elseif error ~= nil then
 				error(err)
 			end

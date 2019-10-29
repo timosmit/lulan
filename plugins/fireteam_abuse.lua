@@ -5,21 +5,8 @@ local this = {}
 local client  = require('client')
 local server  = require('server')
 
-local config
-
-if arg ~= nil then
-	config = unpack(arg)
-end
-
-if config ~= nil and config.limit ~= nil then
-	this.limit = tonumber(config.limit)
-end
-
-if this.limit == nil then
-	this.limit = 2
-elseif this.limit < 0 then
-	this.limit = 0
-end
+local config = arg[1] or {}
+this.limit = tonumber(config.limit or 2)
 
 local PERS_INVITATION  = 'pers.invitationClient'
 local PERS_APPLICATION = 'pers.applicationClient'

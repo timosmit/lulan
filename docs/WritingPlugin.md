@@ -50,6 +50,28 @@ function et_RunFrame(levelTime)
 end
 ~~~
 
+## Configuration
+
+Your plugin is passed a configuration object from corresponding section of `lulan.ini`.
+
+INI file:
+
+~~~ini
+[lulan]
+plugins = my_plugin
+
+# entries in this section will be passed as an object to the plugin
+[my_plugin]
+parameter = 5
+~~~
+
+And in your plugin:
+
+~~~lua
+local config = arg[1] or {}
+dump(config.parameter)
+~~~
+
 ## Unit test
 
 You might (should) write a unit test for your plugin. Just create an another file `?.test.lua`:
