@@ -81,11 +81,15 @@ Contains server lifecycle related functionality.
 
 ### Fields
 
-- `[table] cvars`: Cvars magic accessor
+- `[table] cvars`: cvars magic accessor
+- `[table] configstrings` config strings accessor
 
 ~~~lua
 dump(server.cvars.sv_hostname) -- read
 server.cvars.g_gravity = 100   -- write
+
+dump(server.configstrings[64])     -- read
+server.configstrings[64] = '12 34' -- write
 ~~~
 
 ### Methods

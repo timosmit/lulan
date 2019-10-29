@@ -91,3 +91,6 @@ assert(message == 'lulan: Error occurred in timer: lulan/core\\server.test.lua:7
 
 server.cvars.sv_hostname = '^1ETHost'
 assert(server.cvars.sv_hostname == '^1ETHost')
+
+server.configstrings[0] = 'serverinfo\\abc'
+assert(server.configstrings[0] == 'serverinfo\\abc')

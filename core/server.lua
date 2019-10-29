@@ -5,6 +5,7 @@ local this = {}
 this.timers = {}
 this.level_time = 0
 this.cvars = {}
+this.configstrings = {}
 
 require('event').extend(this)
 
@@ -147,6 +148,16 @@ setmetatable(this.cvars, {
 	end,
 	__newindex = function(_, k, v)
 		return et.trap_Cvar_Set(k, v)
+	end,
+})
+
+-- configstrings magic accessor.
+setmetatable(this.configstrings, {
+	__index = function(_, k)
+		return et.trap_GetConfigstring(k)
+	end,
+	__newindex = function(_, k, v)
+		return et.trap_SetConfigstring(k, v)
 	end,
 })
 
