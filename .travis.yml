@@ -4,7 +4,7 @@ before_install:
   - sudo apt-get -y install lua50
 
 script:
-  - find . -type f -name *.test.lua -print | xargs lua50
+  - find . -type f -name *.test.lua | xargs -L 1 lua50
 
 after_success:
   - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
