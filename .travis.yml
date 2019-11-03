@@ -1,0 +1,20 @@
+language: c
+
+before_install:
+  - sudo apt-get -y install lua50
+
+script:
+  - find . -type f -name *.test.lua -print | xargs lua50
+
+after_success:
+  - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
+  - chmod +x send.sh
+  - ./send.sh success $WEBHOOK_URL
+
+after_failure:
+  - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
+  - chmod +x send.sh
+  - ./send.sh failure $WEBHOOK_URL
+
+notifications:
+  email: false
