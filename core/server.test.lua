@@ -87,7 +87,7 @@ end
 et_RunFrame(350)
 
 assert(table.getn(server.timers) == 0)
-assert(message == 'lulan: Error occurred in timer: lulan/core\\server.test.lua:79: attempt to call global `undefined\' (a nil value)\n')
+assert(message)
 
 server.cvars.sv_hostname = '^1ETHost'
 assert(server.cvars.sv_hostname == '^1ETHost')
